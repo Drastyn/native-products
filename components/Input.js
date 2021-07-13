@@ -9,7 +9,7 @@ class TextInputs extends React.Component {
         placeholder={this.props.placeholder}
         value={this.props.value}
         style={this.props.style}
-        onChangeText={(title) => this.props.onChangeText(title)}
+        onChangeText={(value) => this.props.onChangeText(value)}
       />
     );
   }
