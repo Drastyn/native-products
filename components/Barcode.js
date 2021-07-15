@@ -21,33 +21,35 @@ class Barcode extends React.Component {
     this.setStatusPemission();
   };
 
-  render() {
-    if (this.state.status === null) {
-      return (
-        <View style={styles.barcodeContainer}>
-          <Text style={styles.text}>Cargando...</Text>
-        </View>
-      );
-    }
-    if (this.state.status === "denied") {
-      return (
-        <View style={styles.barcodeContainer}>
-          <Text style={styles.text}>Permission is required</Text>
-          <Button
-            onPress={this.props.setStatusPemission}
-            styleButton={styles.button}
-            styleText={styles.text}
-            text="Give permission"
-          />
-          <Button
-            onPress={this.props.handleOpenScanner}
-            styleButton={styles.backButton}
-            styleText={styles.text}
-            text="Back"
-          />
-        </View>
-      );
-    }
+  renderWhenStatusIsNull = () => {
+    return (
+      <View style={styles.barcodeContainer}>
+        <Text style={styles.text}>Cargando...</Text>
+      </View>
+    );
+  };
+
+  renderWhenStatusIsDenied = () => {
+    return (
+      <View style={styles.barcodeContainer}>
+        <Text style={styles.text}>Permission is required</Text>
+        <Button
+          onPress={this.setStatusPemission}
+          styleButton={styles.button}
+          styleText={styles.text}
+          text="Give permission"
+        />
+        <Button
+          onPress={this.props.handleOpenScanner}
+          styleButton={styles.backButton}
+          styleText={styles.text}
+          text="Back"
+        />
+      </View>
+    );
+  };
+
+  renderWhenStatusIsGranted = () => {
     return (
       <View style={styles.barcodeContainer}>
         <BarCodeScanner
@@ -71,6 +73,14 @@ class Barcode extends React.Component {
         />
       </View>
     );
+  };
+
+  render() {
+    const RENDER = {
+      null: this.renderWhenStatusIsNull(),
+      denied: this.renderWhenStatusIsDenied(),
+    };
+    return RENDER[this.state.status] || this.renderWhenStatusIsGranted();
   }
 }
 

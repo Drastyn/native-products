@@ -70,17 +70,18 @@ class NewProduct extends React.Component {
       .catch((error) => console.log(error));
   };
 
-  render() {
-    if (this.state.openScanner) {
-      return (
-        <Barcode
-          barcodeScanned={this.state.barcodeScanned}
-          handleScanAgain={this.handleScanAgain}
-          setStateBarcode={this.setStateBarcode}
-          handleOpenScanner={this.handleOpenScanner}
-        />
-      );
-    }
+  renderBarcode = () => {
+    return (
+      <Barcode
+        barcodeScanned={this.state.barcodeScanned}
+        handleScanAgain={this.handleScanAgain}
+        setStateBarcode={this.setStateBarcode}
+        handleOpenScanner={this.handleOpenScanner}
+      />
+    );
+  };
+
+  renderFormulary = () => {
     return (
       <SafeAreaView style={[styles.container]}>
         <ScrollView>
@@ -123,6 +124,12 @@ class NewProduct extends React.Component {
         </ScrollView>
       </SafeAreaView>
     );
+  };
+
+  render() {
+    return this.state.openScanner
+      ? this.renderBarcode()
+      : this.renderFormulary();
   }
 }
 
