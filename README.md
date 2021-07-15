@@ -21,4 +21,4 @@ export default API_URL;
 
 ## start
 
-yarn to start
+yarn start
